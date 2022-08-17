@@ -81,7 +81,7 @@ class Game:
 
         moved = moved or self.compress()
 
-        self.rotate((4 - direction) % 4)
+        self.rotate((4 - self.rotations[direction]) % 4)
 
         return moved, reward
 
