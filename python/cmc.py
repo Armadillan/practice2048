@@ -1,18 +1,18 @@
 import numpy as np
 
-class Grid:
+class Game:
 
     def __init__(self, seed=None):
-        self.grid = np.zeros((4,4), dtype=np.uint64)
+        self.state = np.zeros((4,4), dtype=np.uint64)
         self._rng = np.random.default_rng(seed)
 
     def new_tile(self):
-        empty = np.argwhere(self.grid == 0)
+        empty = np.argwhere(self.state == 0)
         new = self._rng.choice(empty, axis=0)
         if self._rng.random() < 0.8:
-            self.grid[new[0], new[1]] = 2
+            self.state[new[0], new[1]] = 2
         else:
-            self.grid[new[0], new[1]] = 4
+            self.state[new[0], new[1]] = 4
 
         return new
 
@@ -20,31 +20,40 @@ class Grid:
         self.__init__()
         self.new_tile()
         self.new_tile()
+        return self.state
 
     def rotate(self, n):
-        self.grid = np.rot90(grid, n)
+        self.state = np.rot90(self.state, n)
 
     def compress(self):
         #down
+        moved = False
+
         for x in range(4):
             for y in range(1, 4):
                 #if not 0
-                if self.grid[x, y]:
+                if self.state[x, y]:
                     new_y = y
-                    while new_y > 0 and self.grid[x, new_y - 1] == 0:
+                    while new_y > 0 and self.state[x, new_y - 1] == 0:
                         new_y -= 1
                     if new_y != y:
-                        self.grid[x, new_y] = self.grid[x, y]
-                        self.grid[x, y] = 0
+                        self.state[x, new_y] = self.state[x, y]
+                        self.state[x, y] = 0
+                        moved = True
+        return moved
 
     def merge(self):
+        reward = 0
         for x in range(4):
             for y in range(0, 3):
                 #if not 0
-                if self.grid[x, y]:
-                    if self.grid[x, y] == self.grid[x, y + 1]:
-                        self.grid[x, y + 1] = 0
-                        self.grid[x, y] *= 2
+                if self.state[x, y]:
+                    if self.state[x, y] == self.state[x, y + 1]:
+                        self.state[x, y + 1] = 0
+                        self.state[x, y] *= 2
+                        reward += self.state[x, y]
+                        moved = True
+        return reward
 
     rotations = {
         0: 2,
@@ -61,18 +70,39 @@ class Grid:
         2 - down
         3- left
         """
-        self.rotate(roations[direction])
-        self.compress()
-        self.merge()
-        self.compress()
+        moved = False
+
+        self.rotate(self.rotations[direction])
+
+        moved = self.compress()
+
+        reward = self.merge()
+        moved = moved or reward
+
+        moved = moved or self.compress()
+
         self.rotate((4 - direction) % 4)
 
-        #todo
-        #generate new tiles and check for gameover
+        return moved, reward
+
+
+    def step(self, direction) -> (np.ndarray, int):
+        # move + generate tiles and check gameover
+
+        # frontend should check this property ad give option to restart
+        # to restart, simply call this function again
+        if self.gameover:
+            return self.reset(), 0
+
+        moved, reward = self.move(direction)
+        if moved:
+            self.new_tile()
+
+        return self.state, reward
 
     #property for compatibility with existing frontent
     @property
-    def check_gameover(self):
+    def gameover(self):
 
         if not self.state.all():
             return False
@@ -87,23 +117,12 @@ class Grid:
                     return False
         return True
 
-    #for compatibility with existing frontent
-    self.step = self.move
-    self.state = self.grid
-
-    def pprint(self):
-        # 7x7 chars for grid squares
-        #todo
-        pass
-
-
-
 if __name__ == "__main__":
-    grid = Grid()
+    game = Game()
     for i in range(2):
-        grid.new_tile()
-        grid.new_tile()
-    print(grid.grid)
-    grid.compress()
+        game.new_tile()
+        game.new_tile()
+    print(game.state)
+    game.compress()
     # grid.rotate(2)
-    print(grid.grid)
+    print(game.state)
