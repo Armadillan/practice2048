@@ -16,10 +16,15 @@ class Grid:
 
         return new
 
-    def compress_up(self):
+    def rotate(self, n):
+        self.grid = np.rot90(grid, n)
+
+    def compress(self):
+        #down
         for x in range(4):
             for y in range(1, 4):
-                if self.grid[x, y] != 0:
+                #if not 0
+                if self.grid[x, y]:
                     new_y = y
                     while new_y > 0 and self.grid[x, new_y - 1] == 0:
                         new_y -= 1
@@ -27,31 +32,48 @@ class Grid:
                         self.grid[x, new_y] = self.grid[x, y]
                         self.grid[x, y] = 0
 
-    def compress_down(self):
+    def merge(self):
         for x in range(4):
-            for y in range(2, -1, -1):
-                if self.grid[x, y] != 0:
-                    new_y = y
-                    while new_y < 3 and self.grid[x, new_y + 1] == 0:
-                        new_y += 1
-                    if new_y != y:
-                        self.grid[x, new_y] = self.grid[x, y]
-                        self.grid[x, y] = 0
-    
-    def compress_left(self):
-        for x in range(1, 4):
-            for y in range(4):
-                if self.grid[x, y] != 0:
-                    new_y = y
+            for y in range(0, 3):
+                #if not 0
+                if self.grid[x, y]:
+                    if self.grid[x, y] == self.grid[x, y + 1]:
+                        self.grid[x, y + 1] = 0
+                        self.grid[x, y] *= 2
 
+    rotations = {
+        0: 2,
+        1: 1,
+        2: 0,
+        3: 3,
+    }
+
+    def move(self, direction):
+        """
+        directins:
+        0 - up
+        1 - right
+        2 - down
+        3- left
+        """
+        self.rotate(roations[direction])
+        self.compress()
+        self.merge()
+        self.compress()
+        self.rotate((4 - direction) % 4)
+
+    def pprint(self):
+        # 7x7 chars for grid squares,
+        pass
 
 
 
 if __name__ == "__main__":
     grid = Grid()
-    print(grid.grid)
     for i in range(2):
         grid.new_tile()
-        print(grid.grid)
-        grid.compress_up()
-        print(grid.grid)
+        grid.new_tile()
+    print(grid.grid)
+    grid.compress()
+    # grid.rotate(2)
+    print(grid.grid)
