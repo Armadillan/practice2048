@@ -26,19 +26,19 @@ class Game:
         self.state = np.rot90(self.state, n)
 
     def compress(self):
-        #down
+        #up
         moved = False
 
         for x in range(4):
             for y in range(1, 4):
                 #if not 0
-                if self.state[x, y]:
+                if self.state[y, x]:
                     new_y = y
-                    while new_y > 0 and self.state[x, new_y - 1] == 0:
+                    while new_y > 0 and self.state[new_y - 1, x] == 0:
                         new_y -= 1
                     if new_y != y:
-                        self.state[x, new_y] = self.state[x, y]
-                        self.state[x, y] = 0
+                        self.state[new_y, x] = self.state[y, x]
+                        self.state[y, x] = 0
                         moved = True
         return moved
 
@@ -47,18 +47,18 @@ class Game:
         for x in range(4):
             for y in range(0, 3):
                 #if not 0
-                if self.state[x, y]:
-                    if self.state[x, y] == self.state[x, y + 1]:
-                        self.state[x, y + 1] = 0
-                        self.state[x, y] *= 2
-                        reward += self.state[x, y]
+                if self.state[y, x]:
+                    if self.state[y, x] == self.state[y + 1, x]:
+                        self.state[y + 1, x] = 0
+                        self.state[y, x] *= 2
+                        reward += self.state[y, x]
                         moved = True
         return reward
 
     rotations = {
-        0: 2,
+        0: 0,
         1: 1,
-        2: 0,
+        2: 2,
         3: 3,
     }
 
@@ -78,8 +78,9 @@ class Game:
 
         reward = self.merge()
         moved = moved or reward
-
-        moved = moved or self.compress()
+        
+        #or operator is short-circuit
+        moved = self.compress() or moved
 
         self.rotate((4 - self.rotations[direction]) % 4)
 
