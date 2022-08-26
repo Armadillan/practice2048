@@ -1,2 +1,0 @@
-bug is that cmc.py and gui.py use different coordinate systems
-now, which should be changed?

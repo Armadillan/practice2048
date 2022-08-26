@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Tuple
 
 class Game:
 
@@ -87,7 +88,7 @@ class Game:
         return moved, reward
 
 
-    def step(self, direction) -> (np.ndarray, int):
+    def step(self, direction) -> Tuple[np.ndarray, int]:
         # move + generate tiles and check gameover
 
         # frontend should check this property ad give option to restart
