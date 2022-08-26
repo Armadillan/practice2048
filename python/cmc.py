@@ -7,7 +7,7 @@ class Game:
         self.state = np.zeros((4,4), dtype=np.uint64)
         self._rng = np.random.default_rng(seed)
 
-    def new_tile(self):
+    def _new_tile(self):
         empty = np.argwhere(self.state == 0)
         new = self._rng.choice(empty, axis=0)
         if self._rng.random() < 0.8:
@@ -19,14 +19,14 @@ class Game:
 
     def reset(self):
         self.__init__()
-        self.new_tile()
-        self.new_tile()
+        self._new_tile()
+        self._new_tile()
         return self.state
 
-    def rotate(self, n):
+    def _rotate(self, n):
         self.state = np.rot90(self.state, n)
 
-    def compress(self):
+    def _compress(self):
         #up
         moved = False
 
@@ -43,7 +43,7 @@ class Game:
                         moved = True
         return moved
 
-    def merge(self):
+    def _merge(self):
         reward = 0
         for x in range(4):
             for y in range(0, 3):
@@ -56,14 +56,14 @@ class Game:
                         moved = True
         return reward
 
-    rotations = {
+    _rotations = {
         0: 0,
         1: 1,
         2: 2,
         3: 3,
     }
 
-    def move(self, direction):
+    def _move(self, direction):
         """
         directins:
         0 - up
@@ -73,17 +73,17 @@ class Game:
         """
         moved = False
 
-        self.rotate(self.rotations[direction])
+        self._rotate(self._rotations[direction])
 
-        moved = self.compress()
+        moved = self._compress()
 
-        reward = self.merge()
+        reward = self._merge()
         moved = moved or reward
         
         #or operator is short-circuit
-        moved = self.compress() or moved
+        moved = self._compress() or moved
 
-        self.rotate((4 - self.rotations[direction]) % 4)
+        self._rotate((4 - self._rotations[direction]) % 4)
 
         return moved, reward
 
@@ -94,11 +94,11 @@ class Game:
         # frontend should check this property ad give option to restart
         # to restart, simply call this function again
         if self.gameover:
-            return self.reset(), 0
+            return self._reset(), 0
 
-        moved, reward = self.move(direction)
+        moved, reward = self._move(direction)
         if moved:
-            self.new_tile()
+            self._new_tile()
 
         return self.state, reward
 
@@ -122,9 +122,9 @@ class Game:
 if __name__ == "__main__":
     game = Game()
     for i in range(2):
-        game.new_tile()
-        game.new_tile()
+        game._new_tile()
+        game._new_tile()
     print(game.state)
-    game.compress()
+    game._compress()
     # grid.rotate(2)
     print(game.state)
