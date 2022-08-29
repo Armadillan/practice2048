@@ -52,7 +52,7 @@ class Game:
                     if self.state[y, x] == self.state[y + 1, x]:
                         self.state[y + 1, x] = 0
                         self.state[y, x] *= 2
-                        reward += self.state[y, x]
+                        reward += int(self.state[y, x])
                         moved = True
         return reward
 
@@ -84,7 +84,6 @@ class Game:
         moved = self._compress() or moved
 
         self._rotate((4 - self._rotations[direction]) % 4)
-
         return moved, reward
 
 
@@ -99,7 +98,6 @@ class Game:
         moved, reward = self._move(direction)
         if moved:
             self._new_tile()
-
         return self.state, reward
 
     #property for compatibility with existing frontent

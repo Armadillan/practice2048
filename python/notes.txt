@@ -3,3 +3,8 @@ reset()
 step(direction)
 gameover
 state
+
+games start by calling reset()
+
+TODO:
+* console frontend using curses for linux, when I get my laptop back?
