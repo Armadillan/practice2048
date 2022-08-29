@@ -14,7 +14,7 @@ All implementations should:
 ### Progress:
 | Language   | EAO | CMC | Frontend |
 |------------|:---:|:---:|:--------:|
-| Python     |     |  X  |     X    |
+| Python     |  X  |  X  |     X    |
 | Rust       |     |     |          |
 | C          |     |     |          |
 | TypeScript |     |     |          |
