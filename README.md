@@ -11,13 +11,13 @@ All implementations should:
 * Track score
 * Stop the game on gameover and give the option to restart
 
-| Language   | EAO | CMC |
-|------------|-----|-----|
-| Python     |     |     |
-| Rust       |     |     |
-| C          |     |     |
-| TypeScript |     |     |
-| Java       |     |     |
-| C++        |     |     |
+| Language   | EAO | CMC | Frontend |
+|------------|:---:|:---:|:--------:|
+| Python     |     |  X  |     X    |
+| Rust       |     |     |          |
+| C          |     |     |          |
+| TypeScript |     |     |          |
+| Java       |     |     |          |
+| C++        |     |     |          |
 
 2048 was originally created by Gabriele Cirulli and can be found [here](https://play2048.co/).
