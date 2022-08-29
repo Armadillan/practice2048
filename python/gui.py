@@ -302,8 +302,10 @@ class Interface:
         pygame.quit()
 
 if __name__ == "__main__":
-    from cmc import Game
+    import cmc
+    import eao
 
-    game = Interface(Game())
+    # game = Interface(cmc.Game())
+    game = Interface(eao.Game())
 
     game.main()
