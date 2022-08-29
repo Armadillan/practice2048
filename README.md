@@ -11,6 +11,7 @@ All implementations should:
 * Track score
 * Stop the game on gameover and give the option to restart
 
+### Progress:
 | Language   | EAO | CMC | Frontend |
 |------------|:---:|:---:|:--------:|
 | Python     |     |  X  |     X    |
