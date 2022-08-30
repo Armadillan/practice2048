@@ -56,13 +56,6 @@ class Game:
                         moved = True
         return reward
 
-    _rotations = {
-        0: 0,
-        1: 1,
-        2: 2,
-        3: 3,
-    }
-
     def _move(self, direction):
         """
         directins:
@@ -73,7 +66,7 @@ class Game:
         """
         moved = False
 
-        self._rotate(self._rotations[direction])
+        self._rotate(direction)
 
         moved = self._compress()
 
@@ -83,7 +76,7 @@ class Game:
         #or operator is short-circuit
         moved = self._compress() or moved
 
-        self._rotate((4 - self._rotations[direction]) % 4)
+        self._rotate((4 - direction) % 4)
         return moved, reward
 
 
