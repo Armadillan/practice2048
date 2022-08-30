@@ -44,10 +44,58 @@ export class Game {
         this.grid = Array(4).fill(0).map((val, index) => this.grid.map(row => row[index]).reverse())
     }
 
-    rotate(n: number) {
+    private rotate(n: number) {
         for (let i = 0; i < n; i++) {
             this.rotate_90();
         }
+    }
+
+    private compress() {
+        //TODO
+    }
+
+    private merge() {
+        //TODO
+    }
+
+    private move(direction: Direction) {
+        //TODO
+    }
+
+    step(direction: Direction) {
+        //TODO
+    }
+
+    get gameover(): boolean {
+
+        // available empty tiles
+        for (let row of this.grid) {
+            for (let val of row) {
+                if (val === 0) {
+                    return false
+                }
+            }
+        }
+
+        // available vertical merges
+        for (let y = 0; y < 3; y++) {
+            for (let x = 0; x < 4; x++) {
+                if (this.grid[x][y] === this.grid[x][y+1]) {
+                    return false
+                }
+            }
+        }
+
+        //available horizontal merges
+        for (let y = 0; y < 4; y++) {
+            for (let x = 0; x < 3; x++) {
+                if (this.grid[x][y] === this.grid[x+1][y]) {
+                    return false
+                }
+            }
+        }
+        
+        return true
     }
 }
 
@@ -55,6 +103,7 @@ let game = new Game;
 console.log(game.grid);
 game.reset();
 console.log(game.grid);
-game.rotate(2);
+// game.rotate(2);
+console.log(game.gameover)
 console.log(game.grid);
 console.log(Math.random())
