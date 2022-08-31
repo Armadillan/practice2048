@@ -46,19 +46,18 @@ class Game:
     def _merge(self):
         reward = 0
         for x in range(4):
-            for y in range(0, 3):
+            for y in range(3):
                 #if not 0
                 if self.state[y, x]:
                     if self.state[y, x] == self.state[y + 1, x]:
                         self.state[y + 1, x] = 0
                         self.state[y, x] *= 2
                         reward += int(self.state[y, x])
-                        moved = True
         return reward
 
     def _move(self, direction):
         """
-        directins:
+        directions:
         0 - up
         1 - right
         2 - down

@@ -1,11 +1,8 @@
-from collections import defaultdict
-
 class Interface:
 
     def __init__(self, game):
         self.game = game
         self.score = 0
-        self.gameover = False
 
     def get_str_val(self, *coords):
         return str(self.game.state[coords[0], coords[1]]).center(7)
