@@ -1,12 +1,18 @@
-enum Direction {
-    Up,
-    Right,
-    Down,
-    Left,
+export enum Direction {
+    // also number of rotations to get each direction
+    Up = 3,
+    Right = 2,
+    Down = 1,
+    Left = 0,
 }
 
 export class Game {
     grid: Array<Array<number>>;
+    score: number;
+
+    constructor() {
+        this.reset();
+    }
 
     private new_tile() {
 
@@ -38,6 +44,7 @@ export class Game {
         this.grid = Array.from(Array(4), () => Array(4).fill(0))
         this.new_tile();
         this.new_tile();
+        this.score = 0;
     }
 
     private rotate_90() {
@@ -50,20 +57,78 @@ export class Game {
         }
     }
 
-    private compress() {
-        //TODO
+    private compress(): boolean {
+        
+        let moved: boolean = false;
+        
+        for (let x = 0; x < 4; x++) {
+            for (let y = 1; y < 4; y++) {
+
+                if (this.grid[x][y] > 0) {
+                    let new_y = y;
+                
+                    while (new_y > 0 && this.grid[x][new_y -1] === 0) {
+                        new_y--;
+                    }
+                    
+                    if (new_y !== y) {
+                        this.grid[x][new_y] = this.grid[x][y];
+                        this.grid[x][y] = 0;
+                        moved = true;
+                    }
+                }
+            }
+        }
+        return moved;
     }
 
-    private merge() {
-        //TODO
+    private merge(): number {
+        let reward = 0;
+
+        for (let x = 0; x < 4; x++) {
+            for (let y = 0; y < 3; y++) {
+
+                if (this.grid[x][y] > 0) {
+                    if (this.grid[x][y] == this.grid[x][y+1]) {
+                        this.grid[x][y+1] = 0;
+                        this.grid[x][y] *= 2;
+                        reward += this.grid[x][y];
+                    }
+                }
+            }
+        }
+        return reward;
     }
 
-    private move(direction: Direction) {
-        //TODO
+    private move(direction: Direction): [boolean, number] {
+        let moved = false;
+
+        this.rotate(direction);
+
+        moved = this.compress();
+        let reward = this.merge();
+        moved = this.compress() || moved || reward > 0;
+
+        this.rotate((4 - direction) % 4);
+
+        return [moved, reward]
+
     }
 
-    step(direction: Direction) {
-        //TODO
+    step(direction: Direction): number {
+        if (this.gameover) {
+            this.reset();
+            return 0;
+        }
+
+        let [moved, reward] = this.move(direction);
+
+        if (moved) {
+            this.new_tile();
+        }
+
+        this.score += reward;
+        return reward
     }
 
     get gameover(): boolean {
@@ -98,12 +163,13 @@ export class Game {
         return true
     }
 }
-
-let game = new Game;
-console.log(game.grid);
-game.reset();
-console.log(game.grid);
-// game.rotate(2);
-console.log(game.gameover)
-console.log(game.grid);
-console.log(Math.random())
+if (require.main === module) {
+    let game = new Game;
+    console.log(game.grid);
+    game.reset();
+    console.log(game.grid);
+    game.step(Direction.Up);
+    console.log(game.gameover)
+    console.log(game.grid);
+    console.log(Math.random())
+}
