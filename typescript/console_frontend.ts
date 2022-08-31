@@ -1,4 +1,4 @@
-import * as readline from 'node:readline';
+import * as readline from "readline";
 
 const rl = readline.createInterface({
     input: process.stdin,

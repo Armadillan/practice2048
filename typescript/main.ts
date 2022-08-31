@@ -1,5 +1,5 @@
 import * as cmc  from "./cmc";
-import { Interface } from "./frontend";
+import { Interface } from "./console_frontend";
 
 let game = new cmc.Game();
 
