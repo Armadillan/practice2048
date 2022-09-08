@@ -7,7 +7,7 @@ Two different implementations:
 
 All implementations should:
 * Be playable with a console frontnend
-* Optionally with a GUI frontent
+* Optionally with a GUI frontend
 * Track score
 * Stop the game on gameover and give the option to restart
 
