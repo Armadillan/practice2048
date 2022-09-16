@@ -1,4 +1,3 @@
-
 use rand::seq::SliceRandom;
 use rand::Rng;
 
@@ -51,7 +50,13 @@ impl Grid {
     }
 
     fn rotate_90(&mut self) {
-        todo!();
+        self.grid = [0, 1, 2, 3]
+            .map(|index| {
+                let mut tmp = self.grid.map(|row| row[index]);
+                tmp.reverse();
+                tmp
+                }
+            );
     }
 
     fn rotate(&mut self, n: usize) {
@@ -61,14 +66,43 @@ impl Grid {
     }
 
     fn compress(&mut self) -> bool {
-        let moved = false;
-        todo!();
+        let mut moved = false;
+        for x in 0..4 {
+            for y in 0..4 {
+                if self.grid[x][y] > 0 {
+                    let mut new_y = y;
+
+                    while new_y > 0 && self.grid[x][y-1] == 0 {
+                        new_y-=1;
+                    }
+
+                    if new_y != y {
+                        self.grid[x][new_y] = self.grid[x][y];
+                        self.grid[x][y] = 0;
+                        moved = true;
+                    }
+
+
+                }
+            }
+        }
         return moved;
     }
 
     fn merge(&mut self) -> u128 {
-        let reward = 0;
-        todo!();
+        let mut reward = 0;
+
+        for x in 0..4 {
+            for y in 0..4 {
+                if self.grid[x][y] > 0  &&
+                    self.grid[x][y] == self.grid[x][y+1] {
+                        self.grid[x][y+1] = 0;
+                        self.grid[x][y] *= 2;
+                        reward += self.grid[x][y];
+                    }
+            }
+        }
+
         return reward;
     }
 
@@ -110,6 +144,31 @@ impl Grid {
     }
 
     pub fn gameover(&mut self) -> bool {
-        todo!()
+        // available empty tiles
+        for row in self.grid {
+            for val in row {
+                if val == 0 {
+                    return false
+                }
+            }
+        }
+        // available vertical merges
+        for y in 0..3 {
+            for x in 0..4 {
+                if self.grid[x][y] == self.grid[x][y+1] {
+                    return false;
+                }
+            }
+        }
+        // available horizontal merges
+        for y in 0..4 {
+            for x in 0..3 {
+                if self.grid[x][y] == self.grid[x+1][y] {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
