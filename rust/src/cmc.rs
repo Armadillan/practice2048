@@ -63,7 +63,7 @@ impl Grid {
                 if self.grid[x][y] > 0 {
                     let mut new_y = y;
 
-                    while new_y > 0 && self.grid[x][y-1] == 0 {
+                    while new_y > 0 && self.grid[x][new_y-1] == 0 {
                         new_y-=1;
                     }
 
@@ -84,7 +84,7 @@ impl Grid {
         let mut reward = 0;
 
         for x in 0..4 {
-            for y in 0..4 {
+            for y in 0..3 {
                 if self.grid[x][y] > 0  &&
                     self.grid[x][y] == self.grid[x][y+1] {
                         self.grid[x][y+1] = 0;
