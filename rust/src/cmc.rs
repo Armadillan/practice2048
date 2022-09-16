@@ -1,31 +1,22 @@
 use rand::seq::SliceRandom;
 use rand::Rng;
 
-pub enum Direction {
-    Up,
-    Right,
-    Down,
-    Left,
-}
+use crate::Direction as Direction;
+use crate::GameLogic as GameLogic;
 
 pub struct Grid {
     pub grid: [[u128; 4]; 4],
     pub score: u128,
 }
 
-pub fn empty_grid() -> Grid {
-    Grid {
-        grid: [[0; 4]; 4],
-        score: 0,
-    }
-}
 
 impl Grid {
-    pub fn reset(&mut self) {
-        self.grid = [[0;4];4];
-        self.new_tile();
-        self.new_tile();
-        self.score = 0;
+
+    pub fn new() -> Self {
+        Self {
+            grid: [[0; 4]; 4],
+            score: 0,
+        }
     }
 
     fn new_tile(&mut self) {
@@ -124,8 +115,18 @@ impl Grid {
 
         return (moved, reward);
     }
+}
 
-    pub fn step(&mut self, direction: Direction) -> u128 {
+impl GameLogic for Grid {
+
+    fn reset(&mut self) {
+        self.grid = [[0;4];4];
+        self.new_tile();
+        self.new_tile();
+        self.score = 0;
+    }
+
+    fn step(&mut self, direction: Direction) -> u128 {
 
         if self.gameover() {
             self.reset();
@@ -143,7 +144,7 @@ impl Grid {
         return reward;
     }
 
-    pub fn gameover(&mut self) -> bool {
+    fn gameover(&self) -> bool {
         // available empty tiles
         for row in self.grid {
             for val in row {
