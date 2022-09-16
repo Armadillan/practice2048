@@ -15,7 +15,7 @@ All implementations should:
 | Language   | EAO | CMC | Frontend |
 |------------|:---:|:---:|:--------:|
 | Python     |  X  |  X  |     X    |
-| Rust       |     |     |     X    |
+| Rust       |     |  X  |     X    |
 | C          |     |     |          |
 | TypeScript |  X  |  X  |     X    |
 | Java       |     |     |          |
