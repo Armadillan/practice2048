@@ -21,4 +21,6 @@ All implementations should:
 | C++        |     |     |          |
 | C          |     |     |          |
 
+Next step could maybe be Electron GUI?
+
 2048 was originally created by Gabriele Cirulli and can be found [here](https://play2048.co/).
