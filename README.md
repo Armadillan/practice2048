@@ -15,10 +15,10 @@ All implementations should:
 | Language   | EAO | CMC | Frontend |
 |------------|:---:|:---:|:--------:|
 | Python     |  X  |  X  |     X    |
-| Rust       |     |  X  |     X    |
-| C          |     |     |          |
 | TypeScript |  X  |  X  |     X    |
+| Rust       |     |  X  |     X    |
 | Java       |     |     |          |
 | C++        |     |     |          |
+| C          |     |     |          |
 
 2048 was originally created by Gabriele Cirulli and can be found [here](https://play2048.co/).
