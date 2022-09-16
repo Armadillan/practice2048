@@ -22,8 +22,8 @@ impl Interface for cmc::Grid {
     fn score(&self) -> u128 {
         self.score
     }
-    fn grid(&self) -> [[u128;4];4] {
-        self.grid
+    fn get_grid_val(&self, x: usize, y: usize) -> u128 {
+        self.grid[x][y]
     }
 }
 

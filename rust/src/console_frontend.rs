@@ -5,10 +5,10 @@ use crate::Direction as Direction;
 pub trait Interface {
 
     fn score(&self) -> u128;
-    fn grid(&self) -> [[u128;4];4];
+    fn get_grid_val(&self, x: usize, y: usize) -> u128;
 
     fn get_str_val(&self, x: usize, y: usize) -> String {
-        format!("{: ^7}", self.grid()[x][y])
+        format!("{: ^7}", self.get_grid_val(x, y))
     }
     fn pprint(&self) {
         println!("|-------|-------|-------|-------|");
