@@ -1,4 +1,5 @@
 mod cmc;
+mod eao;
 mod console_frontend;
 
 use crate::console_frontend::Interface;
@@ -27,7 +28,17 @@ impl Interface for cmc::Grid {
     }
 }
 
+impl Interface for eao::Grid {
+    fn score(&self) -> u128 {
+        self.score
+    }
+    fn get_grid_val(&self, x: usize, y: usize) -> u128 {
+        self.grid[x][y]
+    }
+}
+
 impl FullGame for cmc::Grid {}
+impl FullGame for eao::Grid {}
 
 fn game_loop(game: &mut dyn FullGame) {
     game.reset();
@@ -47,20 +58,8 @@ fn game_loop(game: &mut dyn FullGame) {
 
 fn main() {
 
-    let mut grid = cmc::Grid::new();
-    game_loop(&mut grid);
 
-    // let mut test_grid = cmc::Grid::new();
-    // test_grid.reset();
-    // test_grid.step(Direction::Right);
-    // test_grid.pprint();
-    // impl console_frontend::Interface for cmc::Grid{
-    //     fn score(&self) -> u128 {
-    //         self.score
-    //     }
-    //     fn grid(&self) -> [[u128;4];4] {
-    //         self.grid
-    //     }
-    // }
-    // test_grid.get_input();
+    // let mut grid = cmc::Grid::new();
+    let mut grid = eao::Grid::new();
+    game_loop(&mut grid);
 }
