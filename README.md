@@ -1,5 +1,5 @@
 # practice2048
-2048 in Python, Rust, C, C++, TypeScript (Node.js) and Java. Practicing programming languages.
+2048 in Python, Rust, C, C++, TypeScript (Node.js), Java and Go. Practicing programming languages.
 
 Two different implementations:
 * Everything At Once (EAO), where each move happens in one step, like in https://github.com/Armadillan/TensorFlow2048. Moving and merging each tile one at a time.
@@ -20,6 +20,7 @@ All implementations should:
 | Java       |     |     |          |
 | C++        |     |     |          |
 | C          |     |     |          |
+| Go         |     |     |          |
 
 Next step could maybe be Electron GUI?
 
