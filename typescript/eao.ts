@@ -25,7 +25,7 @@ export class Game {
                 }
             }
         }
-        
+
         // choose one
         let new_tile: [number, number] = empty[Math.floor(Math.random() * empty.length)];
 
@@ -84,12 +84,12 @@ export class Game {
                 }
             }
         }
-        
+
         return true
     }
 
     private move(direction: Direction): [boolean, number] {
-        
+
         let moved = false;
         let reward = 0;
         let merged: Array<[number, number]> = [];
@@ -101,7 +101,7 @@ export class Game {
                 let tile_val = this.grid[x][y];
                 if (tile_val > 0) {
                     let new_y = y;
-                    
+
                     while (new_y > 0 && this.grid[x][new_y-1] === 0) {
                         new_y--;
                     }
