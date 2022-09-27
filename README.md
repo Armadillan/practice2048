@@ -16,7 +16,7 @@ All implementations should:
 |------------|:---:|:---:|:--------:|
 | Python     |  X  |  X  |     X    |
 | TypeScript |  X  |  X  |     X    |
-| Rust       |     |  X  |     X    |
+| Rust       |  X  |  X  |     X    |
 | Java       |     |     |          |
 | C++        |     |     |          |
 | C          |     |     |          |
