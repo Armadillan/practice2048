@@ -36,7 +36,7 @@ export class Interface {
         return s.padStart(s.length + Math.floor((size - s.length) / 2), " ").padEnd(size, " ");
     }
 
-    private get_str_val(x, y, size = 7): string {
+    private get_str_val(x: number, y: number, size = 7): string {
         return this.center_string(this.game.grid[x][y].toString(), size);
     }
 
@@ -52,9 +52,9 @@ export class Interface {
         console.log("|-------|-------|-------|-------|");
         console.log(`Score: ${this.game.score}`);
     }
-    
+
     private async get_input() {
-        
+
         let input = await question("");
         while (!["w", "a", "s", "d"].includes(input)) {
             input = await question("");

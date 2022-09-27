@@ -25,9 +25,10 @@ export class Game {
                 }
             }
         }
-        
+
         // choose one
-        let new_tile: [number, number] = empty[Math.floor(Math.random() * empty.length)];
+        let new_tile: [number, number] =
+            empty[Math.floor(Math.random() * empty.length)];
 
         // decide if 2 or 4
         let new_val = 2;
@@ -48,7 +49,9 @@ export class Game {
     }
 
     private rotate_90() {
-        this.grid = Array(4).fill(0).map((val, index) => this.grid.map(row => row[index]).reverse())
+        this.grid = Array(4)
+        .fill(0)
+        .map((val, index) => this.grid.map(row => row[index]).reverse())
     }
 
     private rotate(n: number) {
@@ -58,19 +61,19 @@ export class Game {
     }
 
     private compress(): boolean {
-        
+
         let moved: boolean = false;
-        
+
         for (let x = 0; x < 4; x++) {
             for (let y = 1; y < 4; y++) {
 
                 if (this.grid[x][y] > 0) {
                     let new_y = y;
-                
+
                     while (new_y > 0 && this.grid[x][new_y -1] === 0) {
                         new_y--;
                     }
-                    
+
                     if (new_y !== y) {
                         this.grid[x][new_y] = this.grid[x][y];
                         this.grid[x][y] = 0;
@@ -159,7 +162,7 @@ export class Game {
                 }
             }
         }
-        
+
         return true
     }
 }
