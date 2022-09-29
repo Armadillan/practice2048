@@ -59,7 +59,7 @@ impl Grid {
     fn compress(&mut self) -> bool {
         let mut moved = false;
         for x in 0..4 {
-            for y in 0..4 {
+            for y in 1..4 {
                 if self.grid[x][y] > 0 {
                     let mut new_y = y;
 
