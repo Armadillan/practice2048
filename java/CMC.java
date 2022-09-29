@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import helpers.MoveReturn;
+
 public class CMC {
     public long[][] grid;
     public long score;
@@ -92,7 +94,7 @@ public class CMC {
         return reward;
     }
 
-    private Object[] move(Direction direction) {
+    private MoveReturn move(Direction direction) {
 
         int rotate_num;
         switch (direction) {
@@ -111,7 +113,7 @@ public class CMC {
 
         rotate((4 - rotate_num) % 4);
 
-        Object[] out = {moved, reward};
+        var out = new MoveReturn(moved, reward);
         return out;
     }
 
@@ -122,19 +124,45 @@ public class CMC {
             return 0;
         }
 
-        Object[] moved, reward = move(direction);
+        MoveReturn move_output = move(direction);
 
-        if (moved) {
+        if (move_output.moved()) {
             new_tile();
         }
 
-        score += reward;
+        score += move_output.reward();
 
-        return reward;
+        return move_output.reward();
     }
 
     public boolean gameover() {
-        //TODO
+
+        for (int i = 0; i < 4; i++) {
+            // for each val in grid[i]
+            for (long val: grid[i]) {
+                if (val == 0) {
+                    return false;
+                }
+            }
+        }
+
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 4; x++) {
+                if (grid[x][y] == grid[x][y+1]) {
+                     return false;
+                }
+            }
+        }
+
+        for (int y = 0; y<4; y++) {
+            for (int x = 0; x < 3; x++) {
+                if (grid[x][y] == grid[x+1][y]) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
 }

@@ -1,0 +1,9 @@
+create jar:
+FROM "out" DIRECTORY:
+# jar cfe main.jar Main *
+
+compile:
+javac -d out Main.class
+
+run:
+java -cp out Main
