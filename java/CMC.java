@@ -2,18 +2,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import helpers.MoveReturn;
+import helpers.RotateLongMatrix;
+import helpers.Direction;
+import helpers.GameInterface;
 
-public class CMC {
-    public long[][] grid;
-    public long score;
+public class CMC implements GameInterface {
+    private long[][] grid;
+    private long score;
     private Random rng = new Random();
-
-    public static enum Direction {
-        Up,
-        Right,
-        Down,
-        Left
-    }
 
     public CMC() {
         // initalized with default value 0
@@ -26,6 +22,14 @@ public class CMC {
         new_tile();
         new_tile();
         score = 0;
+    }
+
+    public long[][] getGrid() {
+        return grid;
+    }
+
+    public long getScore() {
+        return score;
     }
 
     private void new_tile() {
@@ -48,7 +52,7 @@ public class CMC {
     }
 
     private void rotate_90() {
-        //TODO
+        RotateLongMatrix.rotate(grid);
     }
 
     private void rotate(int n) {
@@ -82,7 +86,7 @@ public class CMC {
         long reward = 0;
 
         for (int x = 0; x<4; x++) {
-            for (int y = 0; y<3; y--) {
+            for (int y = 0; y<3; y++) {
                 if (grid[x][y] > 0 && grid[x][y] == grid[x][y+1]) {
                     grid[x][y+1] = 0;
                     grid[x][y] *= 2;
