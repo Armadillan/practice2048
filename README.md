@@ -17,7 +17,7 @@ All implementations should:
 | Python     |  X  |  X  |     X    |
 | TypeScript |  X  |  X  |     X    |
 | Rust       |  X  |  X  |     X    |
-| Java       |     |     |          |
+| Java       |     |  X  |     X    |
 | C++        |     |     |          |
 | C          |     |     |          |
 | Go         |     |     |          |
