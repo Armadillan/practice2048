@@ -117,8 +117,7 @@ public class CMC implements GameInterface {
 
         rotate((4 - rotate_num) % 4);
 
-        var out = new MoveReturn(moved, reward);
-        return out;
+        return new MoveReturn(moved, reward);
     }
 
     public long step(Direction direction) {
