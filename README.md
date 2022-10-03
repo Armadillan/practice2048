@@ -24,6 +24,7 @@ All implementations should:
 
 ### Other things to do:
 * Java but with abstract class instead of interface
+    * Try this with different languages as well, avoid code duplication
 * Electron + Typescript GUI
 * Java GUI
 
