@@ -22,6 +22,9 @@ All implementations should:
 | C          |     |     |          |
 | Go         |     |     |          |
 
-Next step could maybe be Electron GUI?
+### Other things to do:
+* Java but with abstract class instead of interface
+* Electron + Typescript GUI
+* Java GUI
 
 2048 was originally created by Gabriele Cirulli and can be found [here](https://play2048.co/).
