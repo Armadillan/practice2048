@@ -27,5 +27,5 @@ All implementations should:
     * Try this with different languages as well, avoid code duplication
 * Electron + Typescript GUI
 * Java GUI
-
+---
 2048 was originally created by Gabriele Cirulli and can be found [here](https://play2048.co/).
