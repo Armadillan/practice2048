@@ -40,7 +40,7 @@ impl Interface for eao::Grid {
 impl FullGame for cmc::Grid {}
 impl FullGame for eao::Grid {}
 
-fn game_loop(game: &mut dyn FullGame) {
+fn game_loop(game: &mut impl FullGame) {
     game.reset();
     let mut input: Direction;
     loop {
